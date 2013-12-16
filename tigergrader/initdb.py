@@ -19,12 +19,26 @@
 # SOFTWARE.
 
 #!/usr/bin/env python
+import sqlite3
 import sys
 from werkzeug.security import generate_password_hash
 from tigergrader.database import connect_db, init_db
 from flask import Config
 cfg = Config('.')
 cfg.from_envvar('TIGERGRADER_SETTINGS')
+
+
+def create_user(username, emails, password):
+    password_hash = generate_password_hash(password)
+    db = connect_db()
+    try:
+        db.execute("INSERT INTO users VALUES(?,?,?)",
+                   (username, password_hash, emails))
+        db.commit()
+    except sqlite3.IntegrityError:
+        print >>sys.stderr, "Account already exists"
+    finally:
+        db.close()
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
@@ -35,11 +49,6 @@ if __name__ == "__main__":
     emails = sys.argv[1]
     password = sys.argv[2]
 
-    password_hash = generate_password_hash(password)
-
-    db = connect_db()
     init_db()
-    db.execute("INSERT INTO users VALUES(?,?,?)",
-               (username, password_hash, emails))
-    db.commit()
-    db.close()
+
+    create_user(username, emails, password)
