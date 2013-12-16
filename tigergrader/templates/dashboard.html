@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<ul>
+{% for g in grades %}
+<li>
+    <a href="{{ url_for('handout', test=g.test) }}">{{g.test}}</a>
+    (current grade : {{g.grade}} / 20)</li>
+{% endfor %}
+</ul>
+
+{% endblock %}
+
+

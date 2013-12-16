@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">JTiger</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+                <li class="active"><a href="{{ url_for('login') }}">Login</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+  <div class="container">
+  <h1>Create new account</h1>
+  {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+  <form action="" method=post>
+    <dl>
+      <dt>Username:
+      <dd><input type=text name=username value="{{
+          request.form.username }}">
+      <dt>Password:
+      <dd><input type=password name=password>
+      <dt>Emails: 
+      <dd><input type=text name=emails>
+      (please separate multiple emails by commas)
+    </dl>
+    <p><input type=submit value=Register>
+  </form>
+  </div>
+{% endblock %}

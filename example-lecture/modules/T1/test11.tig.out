@@ -1,0 +1,22 @@
+  1:1  	LET
+  2:2  	TYPE
+  2:8  	ID = 'arrtype'
+  2:16 	EQ
+  2:18 	ARRAY
+  2:24 	OF
+  2:27 	ID = 'int'
+  3:2  	VAR
+  3:6  	ID = 'arr1'
+  3:10 	COLON
+  3:11 	ID = 'arrtype'
+  3:19 	ASSIGN
+  3:22 	ID = 'arrtype'
+  3:30 	LBRACK
+  3:31 	INT = '10'
+  3:33 	RBRACK
+  3:35 	OF
+  3:38 	INT = '0'
+  4:1  	IN
+  5:2  	ID = 'arr1'
+  6:1  	END
+Reached End of File

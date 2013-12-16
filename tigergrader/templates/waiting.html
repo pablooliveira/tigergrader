@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div id="loadingmsg" class="alert alert-info">
+    <img src="{{ url_for('static', filename='ajax-loader.gif') }}" \> 
+    Please wait while we test your submission...
+</div>
+    
+<div id="errormsg" class="alert alert-error hide">
+    Your submission could not be graded.
+    The server is not responding.
+</div>
+ 
+<script>
+
+$.ajax({
+            type: "GET",
+            url: "{{ url_for('waitfor', task=task) }}",
+            cache: false,
+            timeout: {{ timeout }},
+            success: function () {
+                window.location.replace("{{ url_for('report', test=test) }}");
+            },
+            error: function () {
+                $("#loadingmsg").addClass('hide');
+                $("#errormsg").removeClass('hide');
+            }
+        });
+</script>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+<h3>Upload your work:</h3>
+
+<form class="form-vertical" action='{{ url_for("submit", test=test) }}' 
+          method=post enctype=multipart/form-data>
+ <div class="control-group">
+    <input class="" type=file name=file>
+    <input class="btn" type=submit value=Upload>
+ </div>
+</form>
+{% endblock %}

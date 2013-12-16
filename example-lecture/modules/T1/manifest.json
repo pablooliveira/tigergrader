@@ -1,0 +1,20 @@
+{
+    "class": "jtiger.cli.Compile", 
+    "opts": "-s",
+    "plagiarism-check": "src/jtiger/lexer/tiger.lex",
+    "tests": [
+        {"input": "test1.tig", "exitcode": 0},
+        {"input": "test2.tig", "exitcode": 0},
+        {"input": "test3.tig", "exitcode": 2},
+        {"input": "test4.tig", "exitcode": 0},
+        {"input": "test5.tig", "exitcode": 2},
+        {"input": "test6.tig", "exitcode": 0},
+        {"input": "test7.tig", "exitcode": 0},
+        {"input": "test8.tig", "exitcode": 0},
+        {"input": "test9.tig", "exitcode": 0},
+        {"input": "test10.tig", "exitcode": 0},
+        {"input": "test11.tig", "exitcode": 0},
+        {"input": "merge.tig", "exitcode": 0},
+        {"input": "queens.tig", "exitcode": 0}
+    ]
+}

@@ -1,0 +1,3 @@
+recursive-include tigergrader/templates *
+recursive-include tigergrader/static *
+include tigergrader/schema.sql

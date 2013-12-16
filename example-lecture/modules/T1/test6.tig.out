@@ -1,0 +1,16 @@
+  1:1  	LET
+  2:1  	IN
+  3:1  	WHILE
+  3:6  	LPAREN
+  3:7  	NIL
+  3:10 	RPAREN
+  4:5  	IF
+  4:8  	LPAREN
+  4:9  	NIL
+  4:13 	EQ
+  4:15 	NIL
+  4:18 	RPAREN
+  4:20 	THEN
+  5:9  	NIL
+  6:5  	END
+  7:1  	END

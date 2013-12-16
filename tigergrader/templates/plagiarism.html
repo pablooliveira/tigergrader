@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<table class="table table-striped">
+<thead>
+<tr>
+    <th>Difference (click to diff)</th>
+    <th>User</th>
+    <th>Timestamp</th>
+    <th>User</th>
+    <th>Timestamp</th>
+</tr>
+</thead>
+<tbody>
+{% for p in plagiarism %}
+{% if p[0] < 0.10 %}    
+<tr class="error">
+{% else %}
+<tr>
+{% endif %}
+    <td>
+          <a href="{{ url_for('compare', test=test, 
+                        u1=p[1].upload, u2=p[2].upload) }}"> 
+            {{p[0]}}
+        </a>
+    </td>
+    <td>
+        <a href="{{ url_for('archive', filename=p[1].upload) }}">
+            {{p[1].user}}
+        </a>
+    </td>
+    <td>{{p[1].timestamp}}</td>
+    <td>
+        <a href="{{ url_for('archive', filename=p[2].upload) }}">
+            {{p[2].user}}
+        </a>
+    </td>
+    <td>{{p[2].timestamp}}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endblock %}
+
+

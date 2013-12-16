@@ -1,0 +1,17 @@
+{
+    "class": "jtiger.cli.Compile",
+    "opts": "-p",
+    "plagiarism-check": "src/jtiger/parser/tiger.cup",
+    "tests": [
+        {"input": "test0.tig", "exitcode": 0},
+        {"input": "test1.tig", "exitcode": 0},
+        {"input": "test2.tig", "exitcode": 0},
+        {"input": "test3.tig", "exitcode": 0},
+        {"input": "test4.tig", "exitcode": 0},
+        {"input": "test5.tig", "exitcode": 0},
+        {"input": "test6.tig", "exitcode": 0},
+        {"input": "test7.tig", "exitcode": 0},
+        {"input": "test8.tig", "exitcode": 3},
+        {"input": "test9.tig", "exitcode": 3}
+    ]
+}

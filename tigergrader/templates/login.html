@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">JTiger</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+
+  <div class="container">
+  <h1>Login</h1>
+  You can also <a href="{{url_for("register")}}">register an account</a>.
+  {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+  <form action="" method=post>
+    <dl>
+      <dt>Username:
+      <dd><input type=text name=username value="{{
+          request.form.username }}">
+      <dt>Password:
+      <dd><input type=password name=password>
+    </dl>
+    <p><input type=submit value=Login>
+  </form>
+  </div>
+{% endblock %}

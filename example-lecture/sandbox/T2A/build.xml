@@ -1,0 +1,84 @@
+<project name="JTiger" default="dist" basedir=".">
+    <description>
+        Builds the JTiger reference compiler.
+    </description>
+
+  <property name="src" location="src"/>
+	<property name="generate" location="generate"/>
+	<property name="correction" location="correction"/>
+	<property name="build" location="build"/>
+		
+  <property name="dist"  location="dist"/>
+  <property name="lib"  location="lib"/>
+
+  <path id="project.class.path">
+      <fileset dir="${lib}">
+          <include name="**/*.jar"/>
+      </fileset>
+      <pathelement path="${correction}" />
+  </path>
+
+
+  <taskdef classname="JFlex.anttask.JFlexTask" name="jflex" 
+      classpathref="project.class.path" />
+  <taskdef classname="java_cup.anttask.CUPTask" name="cup"
+      classpathref="project.class.path" />
+
+  <target name="init">
+    <mkdir dir="${generate}"/>
+    <mkdir dir="${build}"/>
+    <mkdir dir="${generate}/jtiger/codegen/" />
+  </target>
+
+  <target name="jflex">
+      <jflex file="${src}/jtiger/lexer/tiger.lex" destdir="${generate}"/>
+  </target>
+
+  <target name="cup">
+      <cup srcfile="${src}/jtiger/parser/tiger.cup"
+          destdir="${generate}"
+          interface="true"
+          expect="1"
+          dump="true"
+          />
+  </target>
+
+  <target name="compile" depends="init,cup"
+      description="compile the source " >
+      <javac includeantruntime="false" srcdir="${src}:${generate}:${correction}" destdir="${build}"
+          debuglevel="lines,vars,source" debug="on"
+          classpathref="project.class.path" />
+    </target>
+
+  <target name="dist" depends="compile"
+        description="generate the distribution" >
+    <mkdir dir="${dist}/lib"/>
+
+    <jar destfile="${dist}/lib/${ant.project.name}.jar">
+        <fileset dir="${build}"/>
+        <fileset dir="${correction}"/>
+    </jar>
+  </target>
+
+  <target name="doc" depends="">
+      <javadoc destdir="doc/" 
+              sourcepath="src"
+              packagenames="jtiger.*"
+              windowtitle="JTiger" 
+          />
+  </target>
+
+  <target name="zip-src" depends="">
+      <zip destfile="${dist}/jtiger-src.zip" update="true">
+          <zipfileset dir="src/" prefix="src/"/>
+      </zip>
+  </target>
+
+  <target name="clean"
+        description="clean up" >
+    <delete dir="${build}"/>
+    <delete dir="${generate}"/>
+    <delete dir="${dist}"/>
+  </target>
+</project>
+

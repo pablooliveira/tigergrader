@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+{% block body %}
+
+
+
+
+{% if grade == -1 %} 
+<h1>{{test}}  Error</h1>
+<pre>{{ tests[0]["error"] }}</pre>
+
+{% else %}
+<script src="{{ url_for('static', filename='diff.js') }}"></script>
+<h1>{{test}} {{grade}} / 20</h1>
+<div class="accordion" id="accordion2">
+  {% for gr in tests %}
+  
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{loop.index}}">
+            {% if gr.check %}
+              <span class="label label-success">
+            {% else %}
+            <span class="label label-warning">
+            {% endif %}
+            Test {{loop.index}}</span>
+        </a>
+      </div>
+  {% if not gr.check %}
+      <div id="collapse{{loop.index}}" class="accordion-body collapse" style="height: 0px; ">
+        <div class="accordion-inner">
+
+  
+  <ul>
+      <li> Exit Code: <br> {{gr.status}} (expected {{gr.exp_status}}) </li>
+      <li> Stderr: <br>  <div id="differr{{loop.index}}"></div> </li>
+      <li> Stdout: <br>  <div id="diffout{{loop.index}}"></div> </li>
+
+  </ul>
+        </div>
+      </div>
+  {% endif %}
+
+    </div>
+
+
+  {% endfor %}
+</div>
+
+<script>
+    var dmp = new diff_match_patch();
+    dmp.Diff_Timeout = 5;  
+    dmp.Diff_EditCost = 20;
+
+
+    var stdout1 = new Array();
+    var stdout2 = new Array();
+    var stderr1 = new Array();
+    var stderr2 = new Array();
+    {% for gr in tests %}
+        stdout1[{{loop.index}}] = {{gr.exp_out | tojson | safe }};
+        stdout2[{{loop.index}}] = {{gr.out |tojson| safe }};
+        stderr1[{{loop.index}}] = {{gr.exp_err | tojson | safe }};
+        stderr2[{{loop.index}}] = {{gr.err | tojson | safe }};
+    {% endfor %}
+    
+    function diffoutput(s) {
+      i = parseInt(s.substring(8,s.length));
+      var d = dmp.diff_main(stdout1[i], stdout2[i]);
+      dmp.diff_cleanupEfficiency(d);
+      var ds = dmp.diff_prettyHtml(d);
+      $("div#diffout"+i).html(ds);
+
+      d = dmp.diff_main(stderr1[i], stderr2[i]);
+      dmp.diff_cleanupEfficiency(d);
+      ds = dmp.diff_prettyHtml(d);
+      $("div#differr"+i).html(ds);
+    }
+
+    for (i = 1; i <= {{ tests | length }}; i ++) { 
+       $('#collapse' + i).on('show', function () {diffoutput(String($(this).attr('id')));})
+    }
+</script>
+{% endif %}
+{% endblock %}
+
+

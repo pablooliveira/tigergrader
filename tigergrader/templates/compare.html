@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block body %}
+<link type="text/css" rel="stylesheet" 
+    href="{{ url_for('static', filename='codemirror.css') }}" />
+<link type="text/css" rel="stylesheet" 
+    href="{{ url_for('static', filename='mergely.css') }}" />
+<script src="{{ url_for('static', filename='codemirror.min.js') }}"></script>
+<script src="{{ url_for('static', filename='mergely.min.js') }}"></script>
+<div id="compare"><div>
+
+<script>
+$(document).ready(function () {
+	$('#compare').mergely({
+        width: 'auto',
+        height: '600',
+		cmsettings: { readOnly: true, lineNumbers: true },
+		lhs: function(setValue) {
+			setValue({{d1 | tojson | safe }});
+		},
+		rhs: function(setValue) {
+			setValue({{d2 | tojson | safe }});
+		}
+	});
+});
+</script>
+
+
+{% endblock %}
+
+

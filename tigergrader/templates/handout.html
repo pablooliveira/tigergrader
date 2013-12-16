@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h3>Upload your work:</h3>
+
+<form class="form-vertical" action='{{ url_for("submit", test=test) }}' 
+          method=post enctype=multipart/form-data>
+ <div class="control-group">
+    <input class="" type=file name=file>
+    <input class="btn" type=submit value=Upload>
+ </div>
+</form>
+
+<div class="container">
+<span class="label {% if best_grade >= 10 %}label-success{% endif %}">Best grade: {{best_grade}}</span>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Note</th>
+            <th>Rapport</th>
+        </tr>
+    </thead>
+
+    <tbody>
+{% for g in grades %}
+        <tr>
+            <td>{{g.timestamp}}</td>
+            <td>{%if g.grade == -1 %} error (0/20) {% else %} {{g.grade}} {%endif%}</td>
+            <td><a href='{{url_for("report", test=test, report=g.report)}}'>see report</a></td>
+        </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+
+
+</div>
+
+<hr>
+
+
+{{ module_content | safe }}
+
+{% endblock %}
+
+
