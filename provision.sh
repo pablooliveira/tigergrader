@@ -1,4 +1,5 @@
 #!/bin/bash
+VERSION="0.1.0"
 ADMIN_MAIL="tigergrader@example.com"
 ADMIN_PASS="admintiger"
 SERVER_NAME="tigergrader.local"
@@ -20,7 +21,7 @@ cd ${TIGERGRADER_HOME}
 virtualenv -q --distribute pythonenv
 source pythonenv/bin/activate
 
-pip install /vagrant/dist/tigergrader-0.1.tar.gz
+pip install /vagrant/dist/tigergrader-${VERSION}.tar.gz
 
 # Install wsgi configuration
 mkdir -p wsgi

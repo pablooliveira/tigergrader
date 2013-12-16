@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='tigergrader',
-    version='0.1',
+    version='0.1.0',
     author='Pablo Oliveira',
     author_email='pablo@sifflez.org',
     long_description=__doc__,
