@@ -211,6 +211,11 @@ def submit(test):
     f = request.files['file']
     if f and request.method == 'POST':
         filename = str(uuid.uuid1())
+
+        # Create upload folder if it does not exists
+        if not os.path.exists(app.config['UPLOAD_FOLDER']):
+            os.makedirs(app.config['UPLOAD_FOLDER'])
+
         dest = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         f.save(dest)
         task = grade.delay(os.path.abspath(dest), test, session["username"])
