@@ -57,7 +57,7 @@ CELERYD_OPTS="--time-limit=300 --concurrency=4"
 EOF
 
 # Copy default configuration
-cp /vagrant/configuration.py ${TIGERGRADER_HOME}
+cp /vagrant/vagrant/configuration.py ${TIGERGRADER_HOME}
 
 cp -r /vagrant/${LECTURE}/modules ${TIGERGRADER_HOME}
 cp -r /vagrant/${LECTURE}/sandbox ${TIGERGRADER_HOME}
