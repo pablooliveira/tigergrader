@@ -90,7 +90,7 @@ def register():
                 notok = True
 
             emails_list = emails.split(",")
-            if not emails_list:
+            if not emails or not emails_list:
                 flash('At least one email must be provided')
                 notok = True
 
