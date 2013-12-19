@@ -44,7 +44,6 @@ def admin_required(f):
 @admin_required
 def archive(filename):
     fpath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    print "FILE IS", fpath
     if os.path.isfile(fpath):
         with open(fpath) as f:
             return Response(f.read(), mimetype='application/zip')
