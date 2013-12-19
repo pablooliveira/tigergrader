@@ -82,16 +82,15 @@ def unzip(f):
 
 
 def build():
-    status, out, err = call(["ant"])
+    status, out, err = call([cfg["BUILD_COMMAND"]])
     if status != 0:
-        report_error("ant build failed with the following output:\n{0}\n{1}",
+        report_error("build failed with the following output:\n{0}\n{1}",
                      err, out)
 
 
 def write_policy(testfile):
     with file(cfg["POLICY_FILE"], "w") as f:
-        f.write('grant {{permission java.io.FilePermission "{0}", "read";}};'
-                .format(testfile))
+        f.write(cfg["POLICY"].format(input_file=testfile))
 
 
 def check(testfile, exp_status, status, out, err):
@@ -146,7 +145,7 @@ def run_tests(testdir):
         print "."
         testfile = os.path.abspath(os.path.join(testdir, t))
         write_policy(testfile)
-        status, out, err = call(["java"] + cfg["JOPTS"]
+        status, out, err = call([cfg["RUN_COMMAND"]] + cfg["RUN_OPTS"]
                                 + [jclass, topt, testfile])
         rescheck = check(testfile, exp_status, status, out, err)
         result.append(rescheck)

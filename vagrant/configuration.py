@@ -8,7 +8,10 @@ SUBMISSION_TIMEOUT = 60*1000
 MAX_CONTENT_LENGTH = 5 * 1024 * 1024
 EXPECTED_DIR="src/"
 POLICY_FILE="test.policy"
-JOPTS=["-cp",
+POLICY='grant {{permission java.io.FilePermission "{input_file}", "read";}};'
+BUILD_COMMAND="ant"
+RUN_COMMAND="java"
+RUN_OPTS=["-cp",
         "lib/*:dist/lib/JTiger.jar",
         "-Djava.security.manager",
         "-Djava.security.policy={0}".format(POLICY_FILE)
