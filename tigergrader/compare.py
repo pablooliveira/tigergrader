@@ -18,7 +18,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-#!/usr/bin/env python
 import re
 
 
@@ -52,17 +51,3 @@ def compare(expected, produced, strict=False):
                 .format(expected_toks[-1]))
     else:
         return (True, "")
-
-
-if __name__ == "__main__":
-    import argparse
-
-    parser = argparse.ArgumentParser(
-        description="Compare output and expected runs")
-    parser.add_argument('expected', help='The reference output')
-    parser.add_argument('produced', help='The produced output')
-
-    args = parser.parse_args()
-    with file(args.expected) as e:
-        with file(args.produced) as p:
-            print compare(e.read(), p.read())
