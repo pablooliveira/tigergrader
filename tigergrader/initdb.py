@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Copyright (C) 2012-2013 Pablo Oliveira <pablo@sifflez.org>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -18,14 +19,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-#!/usr/bin/env python
+from contextlib import closing
+import os
 import sqlite3
 import sys
 from werkzeug.security import generate_password_hash
-from tigergrader.database import connect_db, init_db
-from flask import Config
-cfg = Config('.')
-cfg.from_envvar('TIGERGRADER_SETTINGS')
+from tigergrader.database import connect_db
+from tigergrader.config import cfg
+
+
+def init_db():
+    install_path = os.path.dirname(os.path.realpath(__file__))
+    with closing(connect_db()) as db:
+        with open(os.path.join(install_path, "schema.sql")) as f:
+            db.cursor().executescript(f.read())
+        db.commit()
 
 
 def create_user(username, emails, password):
@@ -39,6 +47,7 @@ def create_user(username, emails, password):
         print >>sys.stderr, "Account already exists"
     finally:
         db.close()
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:

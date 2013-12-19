@@ -26,10 +26,7 @@ from database import connect_db
 from zipfile import ZipFile
 from tempfile import mkdtemp
 from subprocess import check_output, STDOUT, CalledProcessError
-from flask import Config
-
-cfg = Config('.')
-cfg.from_envvar('TIGERGRADER_SETTINGS')
+from tigergrader.config import cfg
 
 
 def report_error(msg, *args, **kwargs):

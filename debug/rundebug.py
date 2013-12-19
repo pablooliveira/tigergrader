@@ -1,8 +1,7 @@
 import os
 import subprocess
 from tigergrader import app
-from tigergrader.initdb import create_user
-from tigergrader.database import init_db
+from tigergrader.initdb import create_user, init_db
 
 if __name__ == "__main__":
     DEBUG_HOME = os.path.dirname(os.path.realpath(__file__))

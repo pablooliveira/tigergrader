@@ -18,12 +18,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from contextlib import closing
-import os
 import sqlite3
-from flask import Config, g
-cfg = Config('.')
-cfg.from_envvar('TIGERGRADER_SETTINGS')
+from flask import g
+from tigergrader.config import cfg
 
 
 def query_db(query, args=(), one=False, db=None):
@@ -37,11 +34,3 @@ def query_db(query, args=(), one=False, db=None):
 
 def connect_db():
     return sqlite3.connect(cfg["DATABASE"])
-
-
-def init_db():
-    install_path = os.path.dirname(os.path.realpath(__file__))
-    with closing(connect_db()) as db:
-        with open(os.path.join(install_path, "schema.sql")) as f:
-            db.cursor().executescript(f.read())
-        db.commit()

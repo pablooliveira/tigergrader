@@ -24,8 +24,10 @@ from flask import Flask, flash, redirect,\
 from functools import wraps
 from database import connect_db, query_db
 
+from tigergrader.config import cfg
+
 app = Flask(__name__)
-app.config.from_envvar('TIGERGRADER_SETTINGS')
+app.config.update(cfg)
 
 
 class GraderConfiguration():

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Copyright (C) 2012-2013 Pablo Oliveira <pablo@sifflez.org>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -18,7 +19,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-#!/usr/bin/env python
 from zipfile import ZipFile
 import os
 import subprocess
@@ -29,13 +29,10 @@ import tempfile
 from celery import Celery
 from contextlib import closing
 
-from flask import Config
-
 from tigergrader.database import connect_db
 from tigergrader.compare import compare
+from tigergrader.config import cfg
 
-cfg = Config('.')
-cfg.from_envvar('TIGERGRADER_SETTINGS')
 celery = Celery('grader', backend=cfg["CELERY_BACKEND"],
                 broker=cfg["CELERY_BROKER"])
 
