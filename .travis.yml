@@ -10,9 +10,13 @@ env:
 # install dependencies
 install:
   - "sudo apt-get install dwdiff"
+  - "pip install nose nosexcover mock python-coveralls"
   - "pip install ."
-  - "pip install nose nosexcover mock"
+
 
 # run tests
 script:
   - "nosetests --with-xcoverage --cover-package=tigergrader --cover-tests tigergrader/tests/"
+  
+after_success:
+  - coveralls
