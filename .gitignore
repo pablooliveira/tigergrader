@@ -5,3 +5,6 @@ tigergrader.egg-info/
 vagrant/.vagrant
 pythonenv
 env
+.coverage
+debug/upload
+debug/database.db
