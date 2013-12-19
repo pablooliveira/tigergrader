@@ -1,0 +1,18 @@
+# Travis configuration
+language: python
+python:
+  - "2.7"
+
+# environment variables
+env:
+  - TIGERGRADER_SETTINGS=debug/configuration.py
+
+# install dependencies
+install:
+  - "sudo apt-get install dwdiff"
+  - "pip install ."
+  - "pip install nose nosexcover"
+
+# run tests
+script:
+  - "nosetests --with-xcoverage --cover-package=tigergrader --cover-tests tigergrader/tests/"
