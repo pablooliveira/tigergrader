@@ -1,6 +1,7 @@
 import unittest
 import os
 import tempfile
+from mock import patch
 from tigergrader.initdb import create_user
 from cStringIO import StringIO
 from testhelper import TestHelper
@@ -13,6 +14,11 @@ class SubmissionTestCases(TestHelper):
         create_user('admin', 'admin@example.com', 'admintiger')
         create_user('user', 'user@example.com', 'usertiger')
 
+    def test_handout(self):
+        self.login('user', 'usertiger')
+        rv = self.app.get('/handout/T1', follow_redirects=True)
+        assert "Projet JTiger : TD 1" in rv.data
+
     def test_inactive_submission(self):
         self.login('user', 'usertiger')
         rv = self.submit('T1', StringIO('contents'))
@@ -21,7 +27,9 @@ class SubmissionTestCases(TestHelper):
     def test_active_submission(self):
         self.activate_submission('T1')
         self.login('user', 'usertiger')
-        rv = self.submit('T1', StringIO('contents'))
+        with patch('tigergrader.grader.grade.delay') as mock_task:
+            rv = self.submit('T1', StringIO('contents'))
+            assert mock_task.called
         assert "Module does not seem to exist or is inactive." not in rv.data
         assert "/waitfor/" in rv.data
 
@@ -34,6 +42,10 @@ class SubmissionTestCases(TestHelper):
         # grade is displayed for users
         rv = self.app.get('/', follow_redirects=True)
         assert "3.0 / 20" in rv.data
+
+        # grade is displayed in handout
+        rv = self.app.get('/handout/T1', follow_redirects=True)
+        assert "3.0" in rv.data
 
         # the report exists
         rv = self.app.get('/report/T1', follow_redirects=True)

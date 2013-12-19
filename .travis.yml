@@ -11,7 +11,7 @@ env:
 install:
   - "sudo apt-get install dwdiff"
   - "pip install ."
-  - "pip install nose nosexcover"
+  - "pip install nose nosexcover mock"
 
 # run tests
 script:
