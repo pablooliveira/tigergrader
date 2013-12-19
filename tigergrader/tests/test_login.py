@@ -87,13 +87,6 @@ class LoginTestCases(TestHelper):
         self.register("newuser", "secretsecret", "newuser@example.com")
         rv = self.register("newuser", "secretsecret", "newuser@example.com")
         assert "Account already exists" in rv.data
-
-    def test_already_exists(self):
-        create_user('admin', 'admin@example.com', 'admintiger')
-        self.activate_registration()
-        self.register("newuser", "secretsecret", "newuser@example.com")
-        rv = self.register("newuser", "secretsecret", "newuser@example.com")
-        assert "Account already exists" in rv.data
         rv = self.register("admin", "secretsecret", "newuser@example.com")
         assert "Account already exists" in rv.data
 
