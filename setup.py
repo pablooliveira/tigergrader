@@ -10,9 +10,14 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-       "Flask>=0.9",
-       "celery>=3.1",
-       "argparse",
-       "distribute",
-    ]
+        "Flask>=0.9",
+        "celery>=3.1",
+        "argparse",
+        "distribute",
+    ],
+    extras_require=dict(test = [
+        "coverage",
+        "nose",
+        "mock"
+    ]),
 )
