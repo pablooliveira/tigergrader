@@ -7,4 +7,5 @@ Vagrant::Config.run do |config|
   config.vm.forward_port 80, 9999
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
   config.vm.provision :shell, :path => "provision.sh"
+  config.vm.share_folder "v-root", "/vagrant/", "../"
 end

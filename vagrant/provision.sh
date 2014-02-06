@@ -6,6 +6,7 @@ SERVER_NAME="tigergrader.local"
 TIGERGRADER_HOME="/var/www/tigergrader"
 TIGERGRADER_SETTINGS="${TIGERGRADER_HOME}/configuration.py"
 LECTURE="example-lecture/"
+#LECTURE="2013-lecture/"
 export TIGERGRADER_SETTINGS 
 
 # Install required packages
@@ -38,7 +39,7 @@ EOF
 touch wsgi/index.html
 
 # Configure Celery
-wget https://raw.github.com/celery/celery/3.1/extra/generic-init.d/celeryd \
+wget https://raw.github.com/celery/celery/3.2-devel/extra/generic-init.d/celeryd \
     -O /etc/init.d/celeryd
 chmod +x /etc/init.d/celeryd
 
@@ -58,10 +59,12 @@ EOF
 
 # Copy default configuration
 cp /vagrant/vagrant/configuration.py ${TIGERGRADER_HOME}
-
 cp -r /vagrant/${LECTURE}/modules ${TIGERGRADER_HOME}
 cp -r /vagrant/${LECTURE}/sandbox ${TIGERGRADER_HOME}
 mkdir -p ${TIGERGRADER_HOME}/upload/
+cp -rf /vagrant/${LECTURE}/upload/*  ${TIGERGRADER_HOME}/upload/
+
+cp -n /vagrant/${LECTURE}/database.db ${TIGERGRADER_HOME}
 
 # Add user tigergrader
 useradd -s /bin/false -b /var/www/ tigergrader
