@@ -5,6 +5,7 @@ setup(
     version='0.1.0',
     author='Pablo Oliveira',
     author_email='pablo@sifflez.org',
+    url='http://github.com/pablooliveira/tigergrader',
     long_description=__doc__,
     packages=['tigergrader'],
     include_package_data=True,
