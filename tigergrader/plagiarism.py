@@ -50,9 +50,10 @@ def select_submissions(test):
                             SELECT test,user,timestamp,grade,upload
                             FROM grades
                             WHERE test == ?
+                            AND grade <> -1
                             ORDER BY grade ASC, timestamp DESC
                         ) as tmp group by test, user;""",
-                       [test])
+                        [test])
         return list(c)
 
 
@@ -67,8 +68,12 @@ def extract(upload, check_file):
 
 def difference(test, s1, s2):
     check_file = file_to_check(test)
-    d1 = extract(s1[0], check_file)
-    d2 = extract(s2[0], check_file)
+
+    try:
+        d1 = extract(s1[0], check_file)
+        d2 = extract(s2[0], check_file)
+    except:
+        return -1
     try:
         check_output(['dwdiff', '-1', '-2', '-3', '-i', '-s',
                       os.path.join(d1, check_file),
@@ -76,7 +81,7 @@ def difference(test, s1, s2):
                      stderr=STDOUT)
         return 0
     except CalledProcessError as e:
-        return int(e.output.split()[-2][:-1]) / 100.
+        return (100-int(e.output.split()[-8][:-1])) / 100.
     finally:
         shutil.rmtree(d1)
         shutil.rmtree(d2)
